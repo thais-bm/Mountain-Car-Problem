@@ -6,7 +6,7 @@ from deep_q_learning import Dqn  # Importa seu agente reutilizável!
 
 # Carrega o ambiente 'MountainCar-v0' do Gymnasium
 # 'render_mode="human"' abre uma janela para você assistir. Para treinar rápido, remova este parâmetro.
-env = gym.make("MountainCar-v0")
+env = gym.make("MountainCar-v0", render_mode=False)
 
 
 # Pega as especificações do ambiente para configurar nosso agente
@@ -30,11 +30,11 @@ count_tr = 0
 count_trunc = 0
 
 for episode in range(num_episodes):
-    # Reseta o ambiente para começar um novo jogo
+    # Reseta o ambiente para começar um novo "jogo"
     state, info = env.reset()
 
     episode_reward = 0
-    last_reward = 0  # Sua função 'update' usa a recompensa do passo anterior
+    last_reward = 0  # A função 'update' do cerebro usa a recompensa do passo anterior
     done = False
 
     while not done:
@@ -47,7 +47,11 @@ for episode in range(num_episodes):
 
         # 2. Executa a ação no ambiente
         next_state, reward, terminated, truncated, info = env.step(action)
-        #print(next_state)
+        # print(next_state)
+
+        # 3. Recomepensas: De acordo com a posição do eixo X   
+        # Quanto maior o valor, melhor a recompensa 
+        # caso ele alcance o objetivo (terminated) pega a recompensa máxima de 30
         if terminated:
             reward = 30
         elif next_state[0] > 0.4:
@@ -59,14 +63,16 @@ for episode in range(num_episodes):
         elif next_state[0] > -0.2:
             reward = 1
 
-        # 4. Verifica se o episódio terminou
+        # 4. Verifica se o episódio terminou 
+        # Se ele ficou preso ou alcançou a bandeirinha
+        # Faz a contagem de "acertos" e "erros"
+        # Quebra o while-loop para resetar o ambiente para o próximo episódio
         if terminated or truncated:
             print(f'Terminated: {terminated} || Truncated: {truncated}')
         if terminated:
             count_tr += 1
         if truncated:
-            count_trunc += 1
-
+            count_trunc += 1  
         done = terminated or truncated
 
         # 5. Atualiza as variáveis para a próxima iteração
@@ -83,8 +89,6 @@ for episode in range(num_episodes):
 print("Treinamento concluído!")
 print(f'Acertos: {count_tr} / {num_episodes} e Erros: {count_trunc} / {num_episodes}')
 
-# Salva o cérebro treinado
+# Salva o cérebro treinado e fecha o ambiente e a janela de visualização
 brain.save()
-
-# Fecha o ambiente e a janela de visualização
 env.close()
