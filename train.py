@@ -8,6 +8,7 @@ from deep_q_learning import Dqn  # Importa seu agente reutilizável!
 # 'render_mode="human"' abre uma janela para você assistir. Para treinar rápido, remova este parâmetro.
 env = gym.make("MountainCar-v0")
 
+
 # Pega as especificações do ambiente para configurar nosso agente
 # Mountain Car tem 2 observações (posição, velocidade) -> input_size = 2
 input_size = env.observation_space.shape[0]
