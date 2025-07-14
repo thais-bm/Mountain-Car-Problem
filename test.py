@@ -42,4 +42,5 @@ if terminated:
     imageio.mimsave("acerto_mountaincar.gif", frames, duration=1/30)  # 30 FPS
     print("GIF salvo como 'acerto_mountaincar.gif'")
 else:
-    print("O agente não conseguiu alcançar o objetivo ainda.")
+    print("O agente não conseguiu alcançar o objetivo ainda. Inicie o train.py para treinar um novo cérebro."
+          "\n> Possibilidade: Aumente a quantidade de episódios")

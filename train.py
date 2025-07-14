@@ -5,8 +5,8 @@ from deep_q_learning import Dqn  # Importa seu agente reutilizável!
 ## ================== 1. CONFIGURAÇÃO DO AMBIENTE E DO AGENTE ==================
 
 # Carrega o ambiente 'MountainCar-v0' do Gymnasium
-# 'render_mode="human"' abre uma janela para você assistir. Para treinar rápido, remova este parâmetro.
-env = gym.make("MountainCar-v0", render_mode=False)
+# 'render_mode="human"' abre uma janela para você assistir. Para treinar rápido, coloque render_mode=None.
+env = gym.make("MountainCar-v0", render_mode=None)
 
 
 # Pega as especificações do ambiente para configurar nosso agente
@@ -20,7 +20,7 @@ brain = Dqn(input_size=input_size, nb_action=nb_action, gamma=0.99)
 
 ## ================== 2. LOOP DE TREINAMENTO ==================
 
-num_episodes = 500  # Quantos jogos completos vamos rodar
+num_episodes = 50  # Quantos jogos completos vamos rodar
 
 print(f"Iniciando treinamento para o Mountain Car...")
 print(f"   - Estado (Input): {input_size} neurônios")
@@ -42,7 +42,7 @@ for episode in range(num_episodes):
         #    aprende com isso e escolhe a próxima ação.
         action_tensor = brain.update(state, last_reward)
 
-        # O método .item() converte o tensor de uma única ação (ex: tensor([2])) para um inteiro (ex: 2)
+        # Converte o tensor de uma única ação para int
         action = action_tensor.item()
 
         # 2. Executa a ação no ambiente
