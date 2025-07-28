@@ -1,7 +1,6 @@
-# AI for Autonomous Vehicles - Build a Self-Driving Car
+# AI para veículos autônomos
 
-# Importing the libraries
-
+# Importando as bibliotecas necessárias
 import os
 import random
 import torch
@@ -10,8 +9,7 @@ import torch.nn.functional as F
 import torch.optim as optim
 from torch.autograd import Variable
 
-# Creating the architecture of the Neural Network
-
+# Criando a arquitetura da Rede Neural
 class Network(nn.Module):
     
     def __init__(self, input_size, nb_action):
@@ -26,8 +24,7 @@ class Network(nn.Module):
         q_values = self.fc2(x)
         return q_values
 
-# Implementing Experience Replay
-
+# Implementando o Experience Replay
 class ReplayMemory(object):
     
     def __init__(self, capacity):
@@ -43,8 +40,7 @@ class ReplayMemory(object):
         samples = zip(*random.sample(self.memory, batch_size))
         return map(lambda x: Variable(torch.cat(x, 0)), samples)
 
-# Implementing Deep Q-Learning
-
+# Implementando o Deep Q-Learning
 class Dqn(object):
     
     def __init__(self, input_size, nb_action, gamma):
