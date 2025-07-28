@@ -34,7 +34,7 @@ for episode in range(num_episodes):
     state, info = env.reset()
 
     episode_reward = 0
-    last_reward = 0  # A função 'update' do cerebro usa a recompensa do passo anterior
+    last_reward = 0 
     done = False
 
     while not done:
@@ -42,7 +42,7 @@ for episode in range(num_episodes):
         #    aprende com isso e escolhe a próxima ação.
         action_tensor = brain.update(state, last_reward)
 
-        # Converte o tensor de uma única ação para int
+        # Converte o tensor pra int
         action = action_tensor.item()
 
         # 2. Executa a ação no ambiente
